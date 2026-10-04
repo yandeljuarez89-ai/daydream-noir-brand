@@ -16,9 +16,17 @@ const queryClient = new QueryClient();
 function Home() {
   const [introVisible, setIntroVisible] = useState(true);
   const [introLogoComplete, setIntroLogoComplete] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => typeof window !== 'undefined'
+      && typeof window.matchMedia === 'function'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+  const [dropVideoPlaying, setDropVideoPlaying] = useState(false);
+  const [dropVideoMuted, setDropVideoMuted] = useState(true);
   const introSequenceStarted = useRef(false);
   const logoCycleTimeout = useRef<number | null>(null);
   const introExitTimeout = useRef<number | null>(null);
+  const dropVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     return () => {
@@ -30,6 +38,44 @@ function Home() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPreference = () => setPrefersReducedMotion(motionPreference.matches);
+    syncPreference();
+    motionPreference.addEventListener('change', syncPreference);
+    return () => motionPreference.removeEventListener('change', syncPreference);
+  }, []);
+
+  useEffect(() => {
+    const video = dropVideoRef.current;
+    if (!video || prefersReducedMotion) return;
+
+    const startPlayback = () => {
+      void video.play().catch(() => {
+        video.controls = true;
+      });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      startPlayback();
+      return () => video.pause();
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) {
+        startPlayback();
+      } else {
+        video.pause();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(video);
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+  }, [prefersReducedMotion]);
 
   const beginIntroSequence = () => {
     if (introSequenceStarted.current) return;
@@ -72,6 +118,7 @@ function Home() {
     name: 'DAYDREAM 11:11',
     status: 'PRÓXIMAMENTE',
     image: '/daydream-first-drop.jpeg',
+    video: '/daydream-first-drop.mp4',
     price: null as number | null,
     sizes: [] as string[],
     stock: null as number | null,
@@ -83,6 +130,25 @@ function Home() {
     { label: 'TIKTOK', href: '#' },
     { label: 'WHATSAPP', href: '#' },
   ];
+
+  const toggleDropVideoPlayback = () => {
+    const video = dropVideoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play().catch(() => {
+        video.controls = true;
+      });
+    } else {
+      video.pause();
+    }
+  };
+
+  const toggleDropVideoMute = () => {
+    const video = dropVideoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setDropVideoMuted(video.muted);
+  };
 
   return (
     <div className="site-shell">
@@ -156,15 +222,61 @@ function Home() {
             </div>
             <article className="product-layout reveal" aria-label={`Producto ${product.name}`}>
               <div className="product-art">
-                <img
-                  className="product-image"
-                  src={product.image}
-                  alt="Vista frontal y trasera de la camiseta DAYDREAM 11:11"
-                  width="843"
-                  height="1264"
-                  loading="lazy"
-                  decoding="async"
-                />
+                {prefersReducedMotion ? (
+                  <img
+                    className="product-image"
+                    src={product.image}
+                    alt="Vista frontal y trasera de la camiseta DAYDREAM 11:11"
+                    width="843"
+                    height="1264"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <>
+                    <video
+                      ref={dropVideoRef}
+                      className="product-video"
+                      poster={product.image}
+                      muted={dropVideoMuted}
+                      loop
+                      playsInline
+                      preload="none"
+                      aria-label="Movimiento de la camiseta DAYDREAM 11:11, primer drop"
+                      onPlay={() => setDropVideoPlaying(true)}
+                      onPause={() => setDropVideoPlaying(false)}
+                    >
+                      <source src={product.video} type="video/mp4" />
+                      <img
+                        src={product.image}
+                        alt="Vista frontal y trasera de la camiseta DAYDREAM 11:11"
+                        width="843"
+                        height="1264"
+                      />
+                    </video>
+                    <div className="product-video-controls">
+                      <button
+                        className="video-control"
+                        type="button"
+                        onClick={toggleDropVideoPlayback}
+                        aria-label={dropVideoPlaying ? 'Pausar movimiento' : 'Reproducir movimiento'}
+                        title={dropVideoPlaying ? 'Pausar movimiento' : 'Reproducir movimiento'}
+                      >
+                        <span aria-hidden="true">{dropVideoPlaying ? 'Ⅱ' : '▶'}</span>
+                      </button>
+                      <button
+                        className="video-control"
+                        type="button"
+                        onClick={toggleDropVideoMute}
+                        aria-label={dropVideoMuted ? 'Activar sonido' : 'Silenciar sonido'}
+                        aria-pressed={!dropVideoMuted}
+                        title={dropVideoMuted ? 'Activar sonido' : 'Silenciar sonido'}
+                      >
+                        <span aria-hidden="true">{dropVideoMuted ? '♪×' : '♪'}</span>
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="product-info">
                 <span className="product-tag">DROP 001 / 11:11</span>
