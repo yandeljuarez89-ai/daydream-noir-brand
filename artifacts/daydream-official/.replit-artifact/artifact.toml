@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "DAYDREAM — Official Site"
+description = "A cinematic official streetwear brand website for DAYDREAM, featuring the official logo, a 360-degree intro, first drop preview, brand story, and social contact links."
+version = "1.0.0"
+id = "artifacts/daydream-official"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19910
+
+[services.development]
+run = "pnpm --filter @workspace/daydream-official run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/daydream-official", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/daydream-official/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19910"
+BASE_PATH = "/"
