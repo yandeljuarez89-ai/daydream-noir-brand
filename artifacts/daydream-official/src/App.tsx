@@ -81,7 +81,6 @@ function Home() {
   const socialLinks = [
     { label: 'INSTAGRAM', href: 'https://www.instagram.com/daydream1.11/' },
     { label: 'TIKTOK', href: 'https://www.tiktok.com/@daydream11.1' },
-    { label: 'WHATSAPP', href: null },
   ];
 
   return (
@@ -210,7 +209,7 @@ function Home() {
               <p className="contact-intro">Sigue el sueño. Hablemos pronto.</p>
             </div>
             <nav className="social-links reveal" aria-label="Redes sociales">
-              {socialLinks.map((link) => link.href ? (
+              {socialLinks.map((link) => (
                 <a
                   className="social-link"
                   href={link.href}
@@ -222,15 +221,6 @@ function Home() {
                 >
                   <span>{link.label}</span><span aria-hidden="true">↗</span>
                 </a>
-              ) : (
-                <span
-                  className="social-link social-link-placeholder"
-                  aria-disabled="true"
-                  key={link.label}
-                  title="Enlace por añadir"
-                >
-                  <span>{link.label}</span><span aria-hidden="true">↗</span>
-                </span>
               ))}
             </nav>
           </div>
