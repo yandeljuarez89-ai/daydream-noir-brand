@@ -504,15 +504,8 @@ a:focus-visible { outline: 2px solid #b55a60; outline-offset: 5px; }
 .drop-head { display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:57px; }
 .drop-edition { color:#a9a19d; font:11px 'Space Mono',monospace; letter-spacing:.1em; }
 .product-layout { display:grid; grid-template-columns:1.12fr .88fr; gap:clamp(36px,8vw,116px); align-items:center; }
-.product-art { position:relative; width:min(100%,520px); margin-inline:auto; aspect-ratio:720 / 1280; background:#000; display:grid; place-items:center; overflow:hidden; }
-.product-art::before { content:""; position:absolute; width:75%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(104,18,25,.22),transparent 67%); }
+.product-art { position:relative; width:min(100%,520px); margin-inline:auto; aspect-ratio:843 / 1264; background:#000; display:grid; place-items:center; overflow:hidden; }
 .product-image { position:relative; display:block; width:100%; height:100%; object-fit:contain; }
-.product-video { position:relative; display:block; width:100%; height:100%; background:#000; object-fit:contain; }
-.product-video img { display:block; width:100%; height:100%; object-fit:contain; }
-.product-video-controls { position:absolute; right:14px; bottom:14px; z-index:2; display:flex; gap:8px; }
-.video-control { width:40px; height:40px; display:grid; place-items:center; padding:0; border:1px solid rgba(238,234,229,.34); border-radius:50%; color:var(--paper); background:rgba(8,8,8,.82); backdrop-filter:blur(8px); font:12px 'Space Mono',monospace; cursor:pointer; transition:background .2s,border-color .2s; }
-.video-control:hover { background:rgba(116,26,32,.88); border-color:rgba(238,234,229,.68); }
-.video-control:focus-visible { outline:2px solid #b55a60; outline-offset:3px; }
 .product-info { padding:20px 0; }
 .product-tag { color:#ad6467; font:10px 'Space Mono',monospace; letter-spacing:.18em; }
 .product-title { margin:17px 0 29px; font:600 clamp(32px,5vw,58px)/.95 'Barlow Condensed',sans-serif; letter-spacing:.025em; }
