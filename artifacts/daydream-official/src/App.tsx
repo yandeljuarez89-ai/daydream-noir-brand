@@ -117,7 +117,7 @@ function Home() {
   const product = {
     name: 'DAYDREAM 11:11',
     status: 'PRÓXIMAMENTE',
-    image: '/daydream-first-drop.jpeg',
+    image: '/daydream-first-drop-main.jpeg',
     video: '/daydream-first-drop.mp4',
     price: null as number | null,
     sizes: [] as string[],
@@ -126,9 +126,9 @@ function Home() {
   };
 
   const socialLinks = [
-    { label: 'INSTAGRAM', href: '#' },
-    { label: 'TIKTOK', href: '#' },
-    { label: 'WHATSAPP', href: '#' },
+    { label: 'INSTAGRAM', href: 'https://www.instagram.com/daydream1.11/' },
+    { label: 'TIKTOK', href: 'https://www.tiktok.com/@daydream11.1' },
+    { label: 'WHATSAPP', href: null },
   ];
 
   const toggleDropVideoPlayback = () => {
@@ -316,17 +316,27 @@ function Home() {
               <p className="contact-intro">Sigue el sueño. Hablemos pronto.</p>
             </div>
             <nav className="social-links reveal" aria-label="Redes sociales">
-              {socialLinks.map((link) => (
+              {socialLinks.map((link) => link.href ? (
                 <a
                   className="social-link"
                   href={link.href}
-                  aria-label={`${link.label} — enlace por añadir`}
+                  aria-label={`${link.label} — perfil oficial de DAYDREAM, se abre en una pestaña nueva`}
                   key={link.label}
-                  onClick={(event) => event.preventDefault()}
-                  title="Enlace por añadir"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`Abrir ${link.label}`}
                 >
                   <span>{link.label}</span><span aria-hidden="true">↗</span>
                 </a>
+              ) : (
+                <span
+                  className="social-link social-link-placeholder"
+                  aria-disabled="true"
+                  key={link.label}
+                  title="Enlace por añadir"
+                >
+                  <span>{link.label}</span><span aria-hidden="true">↗</span>
+                </span>
               ))}
             </nav>
           </div>

@@ -528,6 +528,8 @@ a:focus-visible { outline: 2px solid #b55a60; outline-offset: 5px; }
 .social-links { display:flex; gap:10px; flex-wrap:wrap; }
 .social-link { min-width:142px; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:17px 16px; color:#d3cdca; text-decoration:none; border:1px solid rgba(238,234,229,.2); font:10px 'Space Mono',monospace; letter-spacing:.1em; transition:background .25s,border-color .25s; }
 .social-link:hover { background:rgba(116,26,32,.18); border-color:rgba(164,82,87,.65); }
+.social-link-placeholder { opacity:.52; cursor:default; }
+.social-link-placeholder:hover { background:transparent; border-color:rgba(238,234,229,.2); }
 .social-link span:last-child { color:#986164; font-size:15px; }
 .footer { padding:28px 7vw; border-top:1px solid rgba(255,255,255,.11); }
 .footer-inner { width:min(100%,1160px); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:22px; color:#76716e; font:9px 'Space Mono',monospace; letter-spacing:.14em; }
