@@ -168,6 +168,12 @@ function Home() {
             />
           ))}
         </div>
+        <div className="intro-meteors" aria-hidden="true">
+          <i className="meteor meteor--upper-left" />
+          <i className="meteor meteor--upper-right" />
+          <i className="meteor meteor--lower-left" />
+          <i className="meteor meteor--lower-right" />
+        </div>
         <div className="intro-logo-wrap">
           <div className="intro-logo-window">
             <img
