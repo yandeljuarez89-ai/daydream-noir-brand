@@ -157,7 +157,7 @@ function Home() {
                 <p className="section-kicker">01 / PRIMER LANZAMIENTO</p>
                 <h2 className="section-heading" id="drop-heading">FIRST DROP</h2>
               </div>
-              <span className="drop-edition">Edición inicial · 30 piezas</span>
+              <span className="drop-quantity">Primer drop · 30 piezas</span>
             </div>
             <article className="product-layout reveal" aria-label={`Producto ${product.name}`}>
               <div className="product-art">
@@ -177,7 +177,7 @@ function Home() {
                 <div className="product-rule" />
                 <div className="product-meta"><span>LANZAMIENTO</span><span>{product.status}</span></div>
                 <div className="product-rule" />
-                <div className="product-meta"><span>EDICIÓN</span><span>01 — 30</span></div>
+                <div className="product-meta"><span>PIEZAS</span><span>01 — 30</span></div>
                 <div className="product-rule" />
                 <div className="product-meta"><span className="product-state"><i className="state-dot" />ESTADO</span><span>{product.status}</span></div>
                 <p className="product-note">Una primera pieza. Una idea hecha realidad.<br />Más detalles muy pronto.</p>
